@@ -1,0 +1,164 @@
+body {
+	background: #222;
+	color: #FFF;
+}
+
+a.accessanchor {
+	display: none;
+}
+
+div.left {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 320px;
+	bottom: 0;
+}
+
+div.right {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 320px;
+	bottom: 0;
+}
+
+div.top {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 50%;
+}
+
+div.bottom {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+div#gutter {
+	background: #333;
+	font-family: Monaco;
+	font-size: 8pt;
+	color: #FFF;
+	border-radius: 3px;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	right: 5px;
+	bottom: 5px;
+	width: 22px;
+	padding: 5px;
+	overflow: hidden;
+}
+
+div.line {
+	background: #222;
+	margin: 0px;
+	text-align: center;
+}
+
+textarea.source {
+	background: #333;
+	font-family: Monaco;
+	font-size: 8pt;
+	color: #FFF;
+	border-radius: 3px;
+	outline: none;
+	white-space: pre;
+	position: absolute;
+	top: 3px;
+	left: 40px;
+	right: 3px;
+	bottom: 3px;
+	outline: none;
+	resize: none;
+	border: none;
+	padding: 5px;
+}		
+
+div.preview {
+	background: White;
+	border-radius: 3px;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	right: 5px;
+	bottom: 5px;
+}
+
+iframe.preview_frame {
+	border-radius: 5px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	border: none;
+	width: 100%;
+	height: 100%;
+}
+
+div.chat {
+	background: #333;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 10pt;
+	border-radius: 3px;
+	padding: 5px;
+	position: absolute;
+	top: 5px;
+	bottom: 5px;
+	left: 5px;
+	right: 5px;
+}
+
+div#transcript {
+	position: absolute;
+	left: 5px;
+	top: 5px;
+	right: 5px;
+	bottom: 35px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+div.message {
+	background: #222;
+	border-radius: 3px;
+	padding: 5px;
+	text-shadow: 0 1px 1px #000;
+	margin-bottom: 5px;
+}
+
+div.old_message {
+	opacity: 0.5;
+}
+
+span.name {
+	font-weight: bold;
+	margin-right: 5px;
+}
+
+div.input {
+	position: absolute;
+	bottom: 5px;
+	left: 5px;
+	right: 5px;
+}
+
+input#send {
+	border: none;
+	border-radius: 3px;
+	padding: 5px;
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	background: #222;
+	box-shadow: inset 0 1px 3px #111;
+	outline: none;
+	color: #FFF;
+}

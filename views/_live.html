@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>LiveEdit</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+		<script src="js/diff_match_patch_uncompressed.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+		
+		$(function()
+		{
+			// when we scroll
+			$('.source').scroll(function ()
+			{
+				$('.gutter').scrollTop($('.source').scrollTop());
+			});	
+			
+			// keydown in source
+			$('.source').keydown(function (event)
+			{								
+				if (event.which == 9) // TAB
+				{
+					event.preventDefault();
+					var selection = window.getSelection();
+					selection.collapseToStart();
+					document.execCommand('insertHTML', false, '&nbsp;&nbsp;&nbsp;&nbsp;');
+				}
+
+				// update the gutter
+				updateGutter();					
+			});
+			
+			// on key up also update the gutter
+			$('.source').keyup(function (event) { updateGutter(); });
+			
+			// initially update the gutter
+			updateGutter();
+		});
+		
+		// this function updates the gutter			
+		function updateGutter()
+		{
+			// update gutter
+			var gutter_count = $('.gutter').children('div').length;
+
+			if ($('.source').val().split('\n').length != $('.gutter').children('div').length)
+			{
+				$('.gutter').html('');
+				$($('.source').val().split('\n')).each(function (i, c)
+				{
+					$('.gutter').append($('<div>').addClass('line').text(i + 1));
+				});
+			}
+
+			// var html = "";
+			// $($('.source').val().split('\n')).each(function (i, v) { html += v.trim(); });
+			// $('#preview').contents().find('body').html(html); // updates preview
+		}
+		
+		</script>
+		<style>
+		
+			body {
+				background: #AAA;
+			}
+			
+			div.main {
+				position: absolute;
+				left: 80px;
+				right: 80px;
+				top: 80px;
+				bottom: 80px;
+				min-width: 840px;
+			}
+			
+			div.left {
+				position: absolute;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				right: 240px;
+			}
+			
+			div.right {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				width: 230px;
+			}
+
+			div.document {
+				background: whiteSmoke;
+				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+				border-radius: 2px;
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+			}
+			
+			div.gutter {
+				position: absolute;
+				left: 5px;
+				top: 5px;
+				bottom: 5px;
+				width: 28px;
+				background: #AAA;
+				white-space: pre;
+				font-family: 'Monaco', monospace;
+				font-size: 8pt;
+				border-top-left-radius: 2px;
+				border-bottom-left-radius: 2px;
+				padding: 5px 0;
+			}
+			
+			div.line {
+				color: #FFF;
+				background: #888;
+				text-align: center;
+				margin: 0 5px;
+			}
+			
+			div.line:first-child {
+				border-top-left-radius: 2px;
+				border-top-right-radius: 2px;
+			}
+			
+			div.line:last-child {
+				border-bottom-left-radius: 2px;
+				border-bottom-right-radius: 2px;
+			}
+			
+			textarea.source {
+				position: absolute;
+				left: 30px;
+				top: 3px;
+				bottom: 3px;
+				right: 3px;
+				border: 1px solid #CCC;
+				border-left: none;
+				resize: none;
+				outline: none;
+				white-space: pre;
+				font-family: 'Monaco', monospace;
+				font-size: 8pt;
+				color: #666;
+				border-top-right-radius: 2px;
+				border-bottom-right-radius: 2px;
+				padding: 4px;			
+			}
+		
+		</style>
+	</head>
+	
+	<body>
+
+		<div class="main">
+		
+			<div class="left">
+				<div class="document">
+					<div class="gutter"></div>
+					<textarea class="source" contenteditable="true" spellcheck="false"></textarea>
+				</div>
+			</div>
+			
+			<div class="right">
+				
+			</div>
+			
+		</div>
+
+		<!-- <div class="left">
+					<a href="#" id="toggle_source" class="accessanchor" accesskey="s"></a>
+					<div class="top">
+						<div class="code">
+							<div id="gutter"></div>
+							<textarea id="source" class="source" contenteditable="true" spellcheck="false"></textarea>
+						</div>
+					</div>
+					<a href="#" id="toggle_preview" class="accessanchor" accesskey="p"></a>
+					<div class="bottom">
+						<div class="preview"><iframe id="preview" src="javascript:;" class="preview_frame"></iframe></div>
+					</div>
+				</div>
+		
+		<a href="#" id="toggle_chat" class="accessanchor" accesskey="c"></a>
+		<div class="right">			
+			<div class="chat">
+				<div id="transcript"></div>
+				<div class="input"><input type="text" id="send" /></div>
+			</div>
+		</div>
+		-->
+		
+	</body>
+	
+</html>

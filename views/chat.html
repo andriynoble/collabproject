@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<title>node.js socket.io chat</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			
+			// create a socket connection
+			var socket = io.connect("http://174.121.252.222/chat");
+	
+			// create the ting
+			var ting = document.createElement('audio');
+			ting.setAttribute('src', 'res/ting.ogg');
+			ting.setAttribute('preload', 'auto');
+	
+			// when we get a log event then we want to update the chat with the old log
+			socket.on('log', function (data)
+			{
+				// clear the chat
+				$('#messages').html('');
+				
+				// loop over the messages and update the chat recursively
+				$.each(data['messages'], function(i, message)
+				{
+					updateChat(message, true);
+				});
+			});
+			
+			// when we receive a message
+			socket.on('msgin', function (data)
+			{
+				// play the ting
+				ting.setAttribute('src', 'res/ting.ogg');
+				ting.play();				
+				
+				updateChat(data, false);
+			});
+			
+			// when we receive an msgok that means our message went through fine
+			socket.on('msgok', function ()
+			{
+				updateChat({ name : 'You', message: $('#message').val() }, false);
+				$('#message').val('');
+			});
+			
+			// add a message object into the list
+			function updateChat(message, old)
+			{
+				$div = $('<div>').addClass('message');
+				if (old) $div.addClass('old');
+				$div.html('<span class="name">' + message['name'] + '</span>' + message['message']);
+				
+				$('#messages').prepend($div);
+			}
+			
+			// sending a message
+			function sendMessage()
+			{
+				var name = $('#name').val();
+				var message = $('#message').val();
+				if (name != "" && message != "")
+					socket.emit('msgout', { name : name, message : message });				
+			}
+
+			// for all the jQuery shit
+			$(function()
+			{		
+				// grab the name on local storage if it exists
+				if (window['localStorage'])
+				{
+					var storage = window['localStorage'];
+					if (storage.getItem('name'))
+						$('#name').val(storage.getItem('name'));
+				}
+				
+				// when you click the send button
+				$('#send').click(function ()
+				{
+					sendMessage();
+				});
+				
+				// when you hit enter on your keyboard while being in the message box
+				$('#message').keypress(function (key)
+				{
+					if (key.which == 13)
+						sendMessage();
+				});
+				
+				$('#name').blur(function ()
+				{
+					localStorage.setItem('name', $('#name').val());
+				});
+			});
+		</script>
+		<style>
+			body {
+				background: #EEE;
+				font-family: Helvetica, Arial, sans-serif;
+				font-size: 10pt;
+				color: #666;
+			}
+
+			::selection {
+				border-radius: 3px;
+				background: #ff0066;
+			}
+
+			div.box {
+				width: 600px;
+				margin: 10px auto;
+				padding: 5px;
+				background: #FFF;
+				border-radius: 5px;
+				box-shadow: 0px 1px 3px #CCC, inset 0px -2px 0px #EEE;
+			}
+
+			div.message {
+				border-radius: 5px;
+				padding: 5px;
+				margin: 10px 5px;
+				background: #F5F5F5;
+				text-shadow: 1px 1px #FDFDFD;
+				border: 1px solid #E0E0E0;
+				font-weight: light;
+			}
+			
+			div.old {
+				opacity: 0.5;
+			}
+
+			span.name {
+				font-weight: bold;
+				margin: 4px;
+			}
+
+			input[type=text], input[type=password] {
+				border: 1px solid #DDD;
+				border-radius: 3px;
+				padding: 5px;
+				color: inherit;
+				outline: none;
+			}
+
+			input[type=text]:active, input[type=password]:active {
+				border-color: #EEE;
+			}	
+
+			input[type=submit], input[type=button] {
+				background: #FEFEFE;
+				background: -webkit-linear-gradient(top, #FEFEFE, whiteSmoke);
+				background:    -moz-linear-gradient(top, #FEFEFE, whiteSmoke);
+				background:      -o-linear-gradient(top, #FEFEFE, whiteSmoke);
+				border: 1px solid #DDD;
+				min-width: 65px;
+				color: inherit;
+				font-weight: bold;
+				text-shadow: 1px 1px 1px #FFF;
+				padding: 5px;
+				border-radius: 3px;
+			}
+			input[type=submit]:hover, input[type=button]:hover {
+				background: #FEFEFE;
+				background: -webkit-linear-gradient(top, #FEFEFE, #F0F0F0);
+				background:    -moz-linear-gradient(top, #FEFEFE, #F0F0F0);
+				background:      -o-linear-gradient(top, #FEFEFE, #F0F0F0);
+				box-shadow: 0px 1px 3px #DDD;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="messages" class="box">
+			<p style="text-align: center;">Loading chat...</p>
+		</div>
+		<div class="box">
+			<input type="text" id="name" placeholder="Your name" />
+			<input type="text" id="message" style="width:376px" placeholder="Your message" />
+			<input type="button" id="send" value="Send" />
+		</div>
+	</body>
+
+</html>
+

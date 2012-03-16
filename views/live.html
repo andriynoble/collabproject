@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>LiveEdit</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+		<script src="js/diff_match_patch_uncompressed.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="js/live.js"></script>
+		<script src="js/live_chat.js"></script>
+		<link href="css/live.css" rel="stylesheet" />		
+	</head>
+	
+	<body>
+
+		<div class="left">
+			<a href="#" id="toggle_source" class="accessanchor" accesskey="s"></a>
+			<div class="top">
+				<div class="code">
+					<div id="gutter"></div>
+					<textarea id="source" class="source" contenteditable="true" spellcheck="false"></textarea>
+				</div>
+			</div>
+			<a href="#" id="toggle_preview" class="accessanchor" accesskey="p"></a>
+			<div class="bottom">
+				<div class="preview"><iframe id="preview" src="javascript:;" class="preview_frame"></iframe></div>
+			</div>
+		</div>
+		
+		<a href="#" id="toggle_chat" class="accessanchor" accesskey="c"></a>
+		<div class="right">			
+			<div class="chat">
+				<div id="transcript"></div>
+				<div class="input"><input type="text" id="send" /></div>
+			</div>
+		</div>
+		
+	</body>
+	
+</html>

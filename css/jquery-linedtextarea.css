@@ -1,0 +1,67 @@
+/**
+ * jQuery Lined Textarea Plugin
+ *   http://alan.blog-city.com/jquerylinedtextarea.htm
+ *
+ * Copyright (c) 2010 Alan Williamson
+ *
+ * Released under the MIT License:
+ * http://www.opensource.org/licenses/mit-license.php
+ * 
+ * Usage:
+ *   Displays a line number count column to the left of the textarea
+ *   
+ *   Class up your textarea with a given class, or target it directly
+ *   with JQuery Selectors
+ *   
+ *   $(".lined").linedtextarea({
+ *   	selectedLine: 10,
+ *    selectedClass: 'lineselect'
+ *   });
+ *
+ */
+/*
+.linedwrap {
+	border: 1px solid #c0c0c0;
+	padding: 3px;
+}
+*/
+/*
+.linedtextarea {
+	padding: 0px;
+	margin: 0px;
+}
+*//*
+.linedtextarea textarea, .linedwrap .codelines .lineno {
+	font-size: 10pt;
+	font-family: monospace;
+	line-height: normal !important;
+}
+*/
+/*
+.linedtextarea textarea {
+	padding-right:0.3em;
+	padding-top:0.3em;
+	border: 0;
+}
+*/
+.linedwrap .lines {
+	background: #333;
+	font-family: Monaco;
+	font-size: 10pt;
+	color: #FFF;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	right: 5px;
+	bottom: 5px;
+	width: 22px;
+	padding: 5px;
+	overflow: hidden;
+	border-radius: 3px;
+}
+
+.linedwrap .codelines {
+	background: #222;
+	margin: 0px;
+	text-align: center;;
+}
